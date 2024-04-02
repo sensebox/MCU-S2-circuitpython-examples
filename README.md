@@ -23,6 +23,9 @@ If you have a CircuitPython example that you would like to contribute, please fo
 4. Update the README.md file with a brief description of your example.
 5. Submit a pull request.
 
+## Back to Arduino
+If you want to go back to Arduino, you can use the [flash-arduino.uf2](./assets/flash-arduino.uf2) file to flash the Arduino bootloader to your CircuitPython-compatible device. To do so, enter the bootloader and drag the `flash-arduino.uf2` file onto the device.
+
 ## License
 
 This repository is licensed under the [MIT License](LICENSE).
