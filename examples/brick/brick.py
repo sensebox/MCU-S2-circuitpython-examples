@@ -91,6 +91,10 @@ def update_ball(ball_pos, ball_dir, paddle_pos, bricks):
         new_y = ball_pos[1] + ball_dir[1]
 
     # Check for brick collisions
+    if [ball_pos[0], new_y] in bricks:
+        bricks.remove([ball_pos[0], new_y])
+        ball_dir[1] = -ball_dir[1]
+        new_y = ball_pos[1] + ball_dir[1]
     if [new_x, new_y] in bricks:
         bricks.remove([new_x, new_y])
         ball_dir[1] = -ball_dir[1]
@@ -104,12 +108,12 @@ def update_ball(ball_pos, ball_dir, paddle_pos, bricks):
 
 def countdown(pixels, seconds=5):
     for i in range(seconds, 0, -1):
-        pixels.fill((255, 255, 255))
+        pixels.fill((100,0,0))
         pixels.show()
-        time.sleep(0.1)
+        time.sleep(0.5)
         pixels.fill((0, 0, 0))
         pixels.show()
-        time.sleep(0.9)
+        time.sleep(0.5)
         print(f"Starting in {i} seconds...")
 
 def main():
@@ -119,14 +123,14 @@ def main():
     initialisieren(spielfeld)
 
     paddle_pos = [5, 6, 7]
-    ball_pos = [6, 4]
+    ball_pos = [6, 3]
     ball_dir = [1, 1]
     bricks = [[x, y] for x in range(12) for y in range(3)]
 
-    countdown(pixels, 5)
+    countdown(pixels, 3)
 
     ball_update_time = time.time()
-    ball_update_interval = 0.5  # Ball update interval (seconds)
+    ball_update_interval = 0.3  # Ball update interval (seconds)
 
     while True:
         clear_screen(spielfeld)
@@ -137,7 +141,15 @@ def main():
             ball_pos, ball_dir, bricks, game_over = update_ball(ball_pos, ball_dir, paddle_pos, bricks)
             if game_over:
                 print("Game Over!")
-                break
+                time.sleep(1.0)
+                ball_pos = [6, 3]
+                bricks = [[x, y] for x in range(12) for y in range(3)]
+                countdown(pixels, 3)
+                draw_paddle(spielfeld, paddle_pos)
+                draw_ball(spielfeld, ball_pos)
+                draw_bricks(spielfeld, bricks)
+                alles_anzeigen(spielfeld, pixels)
+                time.sleep(1.0)
             ball_update_time = current_time
 
         draw_paddle(spielfeld, paddle_pos)
